@@ -1,2 +1,2 @@
-uv tool install .
+uv tool install . \n
 ani
