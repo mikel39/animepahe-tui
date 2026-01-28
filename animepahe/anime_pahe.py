@@ -57,7 +57,7 @@ class AnimePahe:
         data = result.get('data', [])
         return data
 
-    async def get_episodes_by_anime(self, anime_session: str) -> list:
+    async def get_episodes_by_anime(self, anime_session: str, page: int = 1) -> dict:
         """expext the anime session code and retuns a list of episodes asc"""
         res = await clt.get(
             '/api',
@@ -65,12 +65,12 @@ class AnimePahe:
                 'm': 'release',
                 'id': anime_session,
                 'sort': 'episode_asc',
-                'page': 1,
+                'page': page,
             },
         )
 
         res = res.json()
-        return res['data']
+        return res
 
     async def get_latest_releases(self, page: int):
         res = await clt.get('/api', params={'m': 'airing', 'page': page})
