@@ -59,6 +59,7 @@ async def download_anime(anime_session: str, title: str):
 
 async def show_episodes(anime_session: str, title: str):
     page = 1
+
     while True:
         res = await ani.get_episodes_by_anime(anime_session, page)
         episodes = res['data']
@@ -75,21 +76,22 @@ async def show_episodes(anime_session: str, title: str):
             options['rows'].append((episode['episode'], episode['duration']))
 
         menu = RichMenu(options, title)
-        index = menu.run()
-        console.clear()
+        while True:
+            index = menu.run()
+            console.clear()
 
-        match index:
-            case 'back':
-                return
-            case 'next':
-                if next:
-                    page += 1
-            case 'prev':
-                if prev:
-                    page -= 1
-            case number:
-                episode = episodes[number]
-                await show_episode((anime_session, episode['session']))
+            match index:
+                case 'back':
+                    return
+                case 'next':
+                    if next:
+                        page += 1
+                case 'prev':
+                    if prev:
+                        page -= 1
+                case number:
+                    episode = episodes[number]
+                    await show_episode((anime_session, episode['session']))
 
 
 async def search_anime():

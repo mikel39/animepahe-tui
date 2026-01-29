@@ -105,7 +105,7 @@ class RichMenu:
                 return inst
 
     def run(self):
-        with Live(self.__generate_table(), refresh_per_second=20) as live:
+        with Live(self.__generate_table(), auto_refresh=False) as live:
             while True:
                 key_pressed = readchar.readkey()
 
@@ -122,3 +122,4 @@ class RichMenu:
                             return res
 
                 live.update(self.__generate_table())
+                live.refresh()
